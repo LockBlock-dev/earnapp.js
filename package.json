@@ -1,0 +1,29 @@
+{
+    "name": "earnapp.js",
+    "version": "1.0.0",
+    "description": "A JavaScript library for interacting with the EarnApp API",
+    "main": "src/client.js",
+    "exports": {
+        "require": "./src/client.js",
+        "import": "./esm/wrapper.js"
+    },
+    "dependencies": {
+        "axios": "^0.24.0"
+    },
+    "scripts": {
+        "start": "node index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/LockBlock-dev/earnapp.js.git"
+    },
+    "author": "LockBlock-dev",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/LockBlock-dev/earnapp.js/issues"
+    },
+    "homepage": "https://github.com/LockBlock-dev/earnapp.js#readme",
+    "keywords": [
+        "API"
+    ]
+}
