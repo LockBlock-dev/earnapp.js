@@ -100,6 +100,7 @@ Device {
     bw: Number,
     total_bw: Number,
     redeem_bw: Number,
+    rate: Number,
     earned: Number,
     total_earned: Number,
 }
@@ -307,7 +308,6 @@ Get user stats.
 
 ```js
 {
-    rate: Number,
     balance: Number,
     tokens: Number,
     total_earnings: Number,
