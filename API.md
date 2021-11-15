@@ -19,9 +19,6 @@
 <dt><a href="#paymentMethods">paymentMethods()</a> ⇒ <code>Promise</code></dt>
 <dd><p>Get the available payment methods.</p>
 </dd>
-<dt><a href="#redeem">redeem(email, method)</a> ⇒ <code>Promise</code></dt>
-<dd><p>Redeem your balance. (DISABLED)</p>
-</dd>
 <dt><a href="#registerDevice">registerDevice(uuid)</a> ⇒ <code>Promise</code></dt>
 <dd><p>Register a new device on EarnApp database.</p>
 </dd>
@@ -102,7 +99,8 @@ Device {
     redeem_bw: Number,
     rate: Number,
     earned: Number,
-    total_earned: Number,
+    earned_total: Number,
+    cn: String,
 }
 ```
 
@@ -215,28 +213,6 @@ Get the available payment methods.
 client.paymentMethods();
 ```
 
-<a name="redeem"></a>
-
-## redeem(email, method) ⇒ <code>Promise</code>
-
-Redeem your balance. (DISABLED)
-
-**Kind**: method  
-**Returns**:
-
-```js
-{
-    status: String,
-}
-```
-
-| Param  | Type                | Description                                                                      |
-| ------ | ------------------- | -------------------------------------------------------------------------------- |
-| email  | <code>String</code> | paypal / amazon email                                                            |
-| method | <code>String</code> | methods: to see methods do client.<a href="#paymentMethods">paymentMethods()</a> |
-
-**Example**
-
 ```js
 client.setPaymentDetails("mail@domain.com", "paypal.com");
 client.setPaymentDetails("mail@domain.com", "amazon.com (US/Global)");
@@ -310,7 +286,7 @@ Get user stats.
 {
     balance: Number,
     tokens: Number,
-    total_earnings: Number,
+    earnings_total:: Number,
     multiplier: Number,
     redeem_details: Object,
 }
