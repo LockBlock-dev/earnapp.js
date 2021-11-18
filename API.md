@@ -4,6 +4,9 @@
 <dt><a href="#appVersions">appVersions()</a> ⇒ <code>Promise</code></dt>
 <dd><p>Get the app versions.</p>
 </dd>
+<dt><a href="#counters">counters()</a> ⇒ <code>Promise</code></dt>
+<dd><p>Get counters before balances update and auto redeem.</p>
+</dd>
 <dt><a href="#devices">devices()</a> ⇒ <code>Promise</code></dt>
 <dd><p>Get user devices.</p>
 </dd>
@@ -75,6 +78,30 @@ Get the app versions.
 
 ```js
 client.appVersions();
+```
+
+<a name="counters"></a>
+
+## counters() ⇒ <code>Promise</code>
+
+Get counters before balances update and auto redeem.
+
+**Kind**: method  
+**Returns**:
+
+```js
+{
+
+    balance_sync: Number,
+    auto_redeem: Number,
+
+}
+```
+
+**Example**
+
+```js
+client.counters();
 ```
 
 <a name="devices"></a>
@@ -289,6 +316,9 @@ Get user stats.
     earnings_total:: Number,
     multiplier: Number,
     redeem_details: Object,
+    bonuses: Number,
+    bonuses_total: Number,
+    referral_part: String,
 }
 ```
 

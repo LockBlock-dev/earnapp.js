@@ -145,6 +145,15 @@ class Client {
     }
 
     /**
+     * Get counters before balances update and auto redeem.
+     * @example client.stats();
+     * @returns {Promise<Object>}
+     */
+    counters() {
+        return this.#request("GET", "counters");
+    }
+
+    /**
      * Link a new device to your account.
      * @param {string} uuid device uuid
      * @example client.linkDevice("sdk-win-7744606f9f7b42d5b99d11e80f70886c");
@@ -161,7 +170,7 @@ class Client {
      * @example client.registerDevice("sdk-win-7744606f9f7b42d5b99d11e80f70886c");
      * @returns {Promise<Object>}
      */
-    registerDevice(uuid) {
+    registerDevice(uuid, version, arch, appid) {
         return this.#request("POST", "link_device", {
             url: `${this.CLIENT_API_URL}/install_device`,
             data: {
@@ -169,6 +178,7 @@ class Client {
                 version: "1.261.303",
                 arch: process.arch,
                 appid: "node_earnapp.com",
+                //win_earnapp.com
             },
         });
     }
