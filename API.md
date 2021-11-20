@@ -22,6 +22,9 @@
 <dt><a href="#paymentMethods">paymentMethods()</a> ⇒ <code>Promise</code></dt>
 <dd><p>Get the available payment methods.</p>
 </dd>
+<dt><a href="#referrals">referrals()</a> ⇒ <code>Promise</code></dt>
+<dd><p>Get user referrals.</p>
+</dd>
 <dt><a href="#registerDevice">registerDevice(uuid)</a> ⇒ <code>Promise</code></dt>
 <dd><p>Register a new device on EarnApp database.</p>
 </dd>
@@ -243,6 +246,34 @@ client.paymentMethods();
 ```js
 client.setPaymentDetails("mail@domain.com", "paypal.com");
 client.setPaymentDetails("mail@domain.com", "amazon.com (US/Global)");
+```
+
+<a name="referrals"></a>
+
+## referrals() ⇒ <code>Promise</code>
+
+Get user referrals.
+
+**Kind**: method  
+**Returns**:
+
+```js
+Referrals[];
+```
+
+```js
+Referral {
+    id: Number,
+    email: String,
+    bonuses: Number,
+    bonuses_total: Number,
+}
+```
+
+**Example**
+
+```js
+client.referrals();
 ```
 
 <a name="registerDevice"></a>

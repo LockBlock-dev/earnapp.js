@@ -145,6 +145,15 @@ class Client {
     }
 
     /**
+     * Get user referrals.
+     * @example client.referrals();
+     * @returns {Promise<Object>}
+     */
+    referrals() {
+        return this.#request("GET", "referees");
+    }
+
+    /**
      * Get counters before balances update and auto redeem.
      * @example client.stats();
      * @returns {Promise<Object>}
