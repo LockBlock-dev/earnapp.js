@@ -19,6 +19,9 @@
 <dt><a href="#logout">logout()</a> ⇒ <code>Promise</code></dt>
 <dd><p>Log out of your account.</p>
 </dd>
+<dt><a href="#offers">offers()</a> ⇒ <code>Promise</code></dt>
+<dd><p>Get EarnApp current offers.</p>
+</dd>
 <dt><a href="#paymentMethods">paymentMethods()</a> ⇒ <code>Promise</code></dt>
 <dd><p>Get the available payment methods.</p>
 </dd>
@@ -217,6 +220,25 @@ Log out of your account.
 
 ```js
 client.logout();
+```
+
+<a name="offers"></a>
+
+## offers() ⇒ <code>Promise</code>
+
+Get EarnApp current offers.
+
+**Kind**: method  
+**Returns**:
+
+```js
+Offer[];
+```
+
+**Example**
+
+```js
+client.offers();
 ```
 
 <a name="paymentMethods"></a>
