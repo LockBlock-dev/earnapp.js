@@ -172,6 +172,15 @@ class Client {
     }
 
     /**
+     * Get user promotions.
+     * @example client.offers();
+     * @returns {Promise<Object>}
+     */
+    promotions() {
+        return this.#request("GET", "bonuses");
+    }
+
+    /**
      * Link a new device to your account.
      * @param {string} uuid device uuid
      * @example client.linkDevice("sdk-win-7744606f9f7b42d5b99d11e80f70886c");

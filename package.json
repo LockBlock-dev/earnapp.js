@@ -1,6 +1,6 @@
 {
     "name": "earnapp.js",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "description": "A JavaScript library for interacting with the EarnApp API",
     "main": "src/client.js",
     "exports": {

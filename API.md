@@ -25,6 +25,9 @@
 <dt><a href="#paymentMethods">paymentMethods()</a> ⇒ <code>Promise</code></dt>
 <dd><p>Get the available payment methods.</p>
 </dd>
+<dt><a href="#promotions">promotions()</a> ⇒ <code>Promise</code></dt>
+<dd><p>Get user promotions.</p>
+</dd>
 <dt><a href="#referrals">referrals()</a> ⇒ <code>Promise</code></dt>
 <dd><p>Get user referrals.</p>
 </dd>
@@ -134,6 +137,7 @@ Device {
     earned: Number,
     earned_total: Number,
     cn: String,
+    banned: Object,
 }
 ```
 
@@ -235,6 +239,15 @@ Get EarnApp current offers.
 Offer[];
 ```
 
+```js
+Offer {
+    id: String,
+    title: String,
+    brief: Number,
+    meta: Object,
+}
+```
+
 **Example**
 
 ```js
@@ -265,9 +278,23 @@ Get the available payment methods.
 client.paymentMethods();
 ```
 
+<a name="promotions"></a>
+
+## promotions() ⇒ <code>Promise</code>
+
+Get user promotions.
+
+**Kind**: method  
+**Returns**:
+
 ```js
-client.setPaymentDetails("mail@domain.com", "paypal.com");
-client.setPaymentDetails("mail@domain.com", "amazon.com (US/Global)");
+Promotions[];
+```
+
+**Example**
+
+```js
+client.promotions();
 ```
 
 <a name="referrals"></a>
