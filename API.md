@@ -396,8 +396,10 @@ Get user stats.
     earnings_total:: Number,
     multiplier: Number,
     redeem_details: Object,
-    bonuses: Number,
-    bonuses_total: Number,
+    ref_bonuses: Number,
+    ref_bonuses_total: Number,
+    promo_bonuses: Number,
+    promo_bonuses_total: Number,
     referral_part: String,
 }
 ```
