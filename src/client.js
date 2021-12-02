@@ -245,6 +245,27 @@ class Client {
     logout() {
         return this.#request("POST", "logout");
     }
+
+    /**
+     * Rename a device.
+     * @param {string} uuid device uuid
+     * @param {string} name new device name
+     * @example client.rename("sdk-win-7744606f9f7b42d5b99d11e80f70886c", "new name");
+     * @returns {Promise<Object>}
+     */
+    rename(uuid, name) {
+        return this.#request("PUT", `device/${uuid}`, { data: { name: name } });
+    }
+
+    /**
+     * Remove a device.
+     * @param {string} uuid device uuid
+     * @example client.remove("sdk-win-7744606f9f7b42d5b99d11e80f70886c");
+     * @returns {Promise<Object>}
+     */
+    remove(uuid) {
+        return this.#request("DELETE", `device/${uuid}`);
+    }
 }
 
 module.exports = { Client };

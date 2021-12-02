@@ -34,6 +34,12 @@
 <dt><a href="#registerDevice">registerDevice(uuid)</a> ⇒ <code>Promise</code></dt>
 <dd><p>Register a new device on EarnApp database.</p>
 </dd>
+<dt><a href="#remove">remove(uuid)</a> ⇒ <code>Promise</code></dt>
+<dd><p>Remove a device.</p>
+</dd>
+<dt><a href="#rename">rename(uuid, name)</a> ⇒ <code>Promise</code></dt>
+<dd><p>Rename a device.</p>
+</dd>
 <dt><a href="#setPaymentDetails">setPaymentDetails(email, method)</a> ⇒ <code>Promise</code></dt>
 <dd><p>Set your payment details.</p>
 </dd>
@@ -79,6 +85,7 @@ Get the app versions.
 {
 
     win: String,
+    mac: String,
 
 }
 ```
@@ -353,6 +360,61 @@ Use client.<a href="#linkDevice">linkDevice(uuid)</a> to link it to your account
 client.registerDevice("sdk-win-7744606f9f7b42d5b99d11e80f70886c");
 ```
 
+<a name="remove"></a>
+
+## remove(uuid) ⇒ <code>Promise</code>
+
+Remove a device.
+
+**Kind**: method  
+**Returns**:
+
+```js
+{
+
+    status: String,
+
+}
+```
+
+| Param | Type                | Description |
+| ----- | ------------------- | ----------- |
+| uuid  | <code>String</code> | device uuid |
+
+**Example**
+
+```js
+client.rename("sdk-win-7744606f9f7b42d5b99d11e80f70886c", "new name");
+```
+
+<a name="rename"></a>
+
+## rename(uuid, name) ⇒ <code>Promise</code>
+
+Rename a device.
+
+**Kind**: method  
+**Returns**:
+
+```js
+{
+
+    status: String,
+
+}
+```
+
+| Param | Type                | Description     |
+| ----- | ------------------- | --------------- |
+| uuid  | <code>String</code> | device uuid     |
+| name  | <code>String</code> | new device name |
+
+**Example**
+
+```js
+client.rename("sdk-win-7744606f9f7b42d5b99d11e80f70886c", "new name");
+```
+
 <a name="setPaymentDetails"></a>
 
 ## setPaymentDetails(email, method) ⇒ <code>Promise</code>
@@ -434,6 +496,8 @@ Transaction {
     devices: Array,
     bw_amount: Number,
     money_amount: Number,
+    ref_bonuses_amount: Number,
+    promo_bonuses_amount: Number,
 }
 ```
 
@@ -459,6 +523,7 @@ Get your user data.
     name: String,
     locale: String,
     picture: String,
+    referral_code: String,
     email: String,
 }
 ```
