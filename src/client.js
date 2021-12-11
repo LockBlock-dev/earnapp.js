@@ -62,6 +62,7 @@ class Client {
                 }
             })
             .catch((error) => {
+                console.log(error.request.path);
                 throw error.type === "ParseError"
                     ? error
                     : new errors.APIError(error, error.response, error.response.status, options.method, options.url);
@@ -178,6 +179,24 @@ class Client {
      */
     promotions() {
         return this.#request("GET", "bonuses");
+    }
+
+    /**
+     * Get EarnApp current notifications.
+     * @example client.notifications();
+     * @returns {Promise<Object>}
+     */
+    notifications() {
+        return this.#request("GET", "notifications");
+    }
+
+    /**
+     * Get contest leaderboard.
+     * @example client.leaderboard();
+     * @returns {Promise<Object>}
+     */
+    leaderboard() {
+        return this.#request("GET", "leaderboard");
     }
 
     /**

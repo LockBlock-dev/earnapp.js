@@ -10,6 +10,9 @@
 <dt><a href="#devices">devices()</a> ⇒ <code>Promise</code></dt>
 <dd><p>Get user devices.</p>
 </dd>
+<dt><a href="#leaderboard">leaderboard()</a> ⇒ <code>Promise</code></dt>
+<dd><p>Get contest leaderboard.</p>
+</dd>
 <dt><a href="#linkDevice">linkDevice(uuid)</a> ⇒ <code>Promise</code></dt>
 <dd><p>Link a new device to your account.</p>
 </dd>
@@ -18,6 +21,9 @@
 </dd>
 <dt><a href="#logout">logout()</a> ⇒ <code>Promise</code></dt>
 <dd><p>Log out of your account.</p>
+</dd>
+<dt><a href="#notifications">notifications()</a> ⇒ <code>Promise</code></dt>
+<dd><p>Get EarnApp current notifications.</p>
 </dd>
 <dt><a href="#offers">offers()</a> ⇒ <code>Promise</code></dt>
 <dd><p>Get EarnApp current offers.</p>
@@ -154,6 +160,33 @@ Device {
 client.devices();
 ```
 
+<a name="leaderboard"></a>
+
+## leaderboard() ⇒ <code>Promise</code>
+
+Get contest leaderboard.
+
+**Kind**: method  
+**Returns**:
+
+```js
+User[];
+```
+
+```js
+User {
+    referees: Number,
+    place: Number,
+    email: String,
+};
+```
+
+**Example**
+
+```js
+client.leaderboard();
+```
+
 <a name="linkDevice"></a>
 
 ## linkDevice(uuid) ⇒ <code>Promise</code>
@@ -231,6 +264,34 @@ Log out of your account.
 
 ```js
 client.logout();
+```
+
+<a name="notifications"></a>
+
+## notifications() ⇒ <code>Promise</code>
+
+Get EarnApp current notifications.
+
+**Kind**: method  
+**Returns**:
+
+```js
+Notification[];
+```
+
+```js
+Notification {
+    id: String,
+    title: String,
+    brief: Number,
+    meta: Object,
+}
+```
+
+**Example**
+
+```js
+client.notifications();
 ```
 
 <a name="offers"></a>
