@@ -62,7 +62,6 @@ class Client {
                 }
             })
             .catch((error) => {
-                console.log(error.request.path);
                 throw error.type === "ParseError"
                     ? error
                     : new errors.APIError(error, error.response, error.response.status, options.method, options.url);
