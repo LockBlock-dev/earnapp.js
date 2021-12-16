@@ -4,6 +4,9 @@
 <dt><a href="#appVersions">appVersions()</a> ⇒ <code>Promise</code></dt>
 <dd><p>Get the app versions.</p>
 </dd>
+<dt><a href="#check">check(ip)</a> ⇒ <code>Promise</code></dt>
+<dd><p>Check an ip for EarnApp.</p>
+</dd>
 <dt><a href="#counters">counters()</a> ⇒ <code>Promise</code></dt>
 <dd><p>Get counters before balances update and auto redeem.</p>
 </dd>
@@ -100,6 +103,33 @@ Get the app versions.
 
 ```js
 client.appVersions();
+```
+
+<a name="check"></a>
+
+## check(ip) ⇒ <code>Promise</code>
+
+Check an ip for EarnApp.
+
+**Kind**: method  
+**Returns**:
+
+```js
+{
+
+    is_blocked: Boolean | Array,
+
+}
+```
+
+| Param | Type                | Description |
+| ----- | ------------------- | ----------- |
+| ip    | <code>String</code> | ip to check |
+
+**Example**
+
+```js
+client.check("1.1.1.1");
 ```
 
 <a name="counters"></a>
@@ -585,6 +615,7 @@ Get your user data.
     locale: String,
     picture: String,
     referral_code: String,
+    onboarding: String,
     email: String,
 }
 ```

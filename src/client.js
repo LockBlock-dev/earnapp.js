@@ -266,6 +266,16 @@ class Client {
     }
 
     /**
+     * Check an ip for EarnApp.
+     * @param {string} ip ip to check
+     * @example client.check("1.1.1.1");
+     * @returns {Promise<Object>}
+     */
+    check(ip) {
+        return this.#request("POST", `check_ip/${ip}`);
+    }
+
+    /**
      * Rename a device.
      * @param {string} uuid device uuid
      * @param {string} name new device name
