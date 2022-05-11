@@ -49,6 +49,7 @@ const client = new Client();
 client.login({
     authMethod: "google",
     oauthRefreshToken: "1%2F%2F0dx...mfz75",
+    xsrfToken: "uE9Tm4sXtk4wHEz4tZFJyANB", //needed for endpoints like linking a device / or making a payout
 });
 
 client.stats().then((data) => {
