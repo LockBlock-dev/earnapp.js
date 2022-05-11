@@ -1,9 +1,6 @@
 # Methods
 
 <dl>
-<dt><a href="#appVersions">appVersions()</a> ⇒ <code>Promise</code></dt>
-<dd><p>Get the app versions.</p>
-</dd>
 <dt><a href="#check">check(ip)</a> ⇒ <code>Promise</code></dt>
 <dd><p>Check an ip for EarnApp.</p>
 </dd>
@@ -12,6 +9,15 @@
 </dd>
 <dt><a href="#devices">devices()</a> ⇒ <code>Promise</code></dt>
 <dd><p>Get user devices.</p>
+</dd>
+<dt><a href="#devicesStatus">devicesStatus(list)</a> ⇒ <code>Promise</code></dt>
+<dd><p>Get user devices status.</p>
+</dd>
+<dt><a href="#downloads">downloads()</a> ⇒ <code>Promise</code></dt>
+<dd><p>Get the app versions.</p>
+</dd>
+<dt><a href="#hide">hide(uuid)</a> ⇒ <code>Promise</code></dt>
+<dd><p>Hide a device.</p>
 </dd>
 <dt><a href="#leaderboard">leaderboard()</a> ⇒ <code>Promise</code></dt>
 <dd><p>Get contest leaderboard.</p>
@@ -46,8 +52,14 @@
 <dt><a href="#remove">remove(uuid)</a> ⇒ <code>Promise</code></dt>
 <dd><p>Remove a device.</p>
 </dd>
+<dt><a href="#removeAutoRedeem">removeAutoRedeem()</a> ⇒ <code>Promise</code></dt>
+<dd><p>Remove auto redeem.</p>
+</dd>
 <dt><a href="#rename">rename(uuid, name)</a> ⇒ <code>Promise</code></dt>
 <dd><p>Rename a device.</p>
+</dd>
+<dt><a href="#show">show(uuid)</a> ⇒ <code>Promise</code></dt>
+<dd><p>Show a device.</p>
 </dd>
 <dt><a href="#setPaymentDetails">setPaymentDetails(email, method)</a> ⇒ <code>Promise</code></dt>
 <dd><p>Set your payment details.</p>
@@ -57,6 +69,9 @@
 </dd>
 <dt><a href="#transactions">transactions()</a> ⇒ <code>Promise</code></dt>
 <dd><p>Get user transactions.</p>
+</dd>
+<dt><a href="#usage">usage()</a> ⇒ <code>Promise</code></dt>
+<dd><p>Get user devices usage.</p>
 </dd>
 <dt><a href="#userData">userData()</a> ⇒ <code>Promise</code></dt>
 <dd><p>Get your user data.</p>
@@ -80,30 +95,6 @@
 ---
 
 # Methods
-
-<a name="appVersions"></a>
-
-## appVersions() ⇒ <code>Promise</code>
-
-Get the app versions.
-
-**Kind**: method  
-**Returns**:
-
-```js
-{
-
-    win: String,
-    mac: String,
-
-}
-```
-
-**Example**
-
-```js
-client.appVersions();
-```
 
 <a name="check"></a>
 
@@ -172,6 +163,7 @@ Device[];
 ```js
 Device {
     uuid: String,
+    appid: String,
     title: String,
     bw: Number,
     total_bw: Number,
@@ -179,7 +171,9 @@ Device {
     rate: Number,
     earned: Number,
     earned_total: Number,
-    cn: String,
+    country: String,
+    ips: Array,
+    billing: String,
     banned: Object,
 }
 ```
@@ -188,6 +182,90 @@ Device {
 
 ```js
 client.devices();
+```
+
+<a name="devicesStatus"></a>
+
+## devicesStatus(list) ⇒ <code>Promise</code>
+
+Get user devices status.
+
+**Kind**: method  
+**Returns**:
+
+```js
+{
+    status: {
+        "sdk-win-XXX": {
+            online: Boolean,
+            online_since: String,
+            uptime_today: Number
+        }
+    },
+}
+```
+
+| Param | Type               | Description  |
+| ----- | ------------------ | ------------ |
+| list  | <code>Array</code> | devices list |
+
+**Example**
+
+```js
+client.devicesStatus([
+    { uuid: "sdk-win-7744606f9f7b42d5b99d11e80f70886c", appid: "win_earnapp.com" },
+]);
+```
+
+<a name="downloads"></a>
+
+## downloads() ⇒ <code>Promise</code>
+
+Get the app versions.
+
+**Kind**: method  
+**Returns**:
+
+```js
+{
+
+    win: String,
+    mac: String,
+
+}
+```
+
+**Example**
+
+```js
+client.downloads();
+```
+
+<a name="hide"></a>
+
+## hide(uuid) ⇒ <code>Promise</code>
+
+Hide a device.
+
+**Kind**: method  
+**Returns**:
+
+```js
+{
+
+    status: String,
+
+}
+```
+
+| Param | Type                | Description |
+| ----- | ------------------- | ----------- |
+| uuid  | <code>String</code> | device uuid |
+
+**Example**
+
+```js
+client.hide("sdk-win-7744606f9f7b42d5b99d11e80f70886c");
 ```
 
 <a name="leaderboard"></a>
@@ -266,11 +344,17 @@ Log into EarnApp.
 | authCookies                         | <code>Object</code> |                       |
 | authCookies<area>.authMethod        | <code>String</code> | authentication method |
 | authCookies<area>.oauthRefreshToken | <code>String</code> | OAuth refresh token   |
+| authCookies<area>.xsrfToken         | <code>String</code> | CSRF token            |
 
 **Example**
 
 ```js
-client.login({ authMethod: "google", oauthRefreshToken: "1%2F%2F0dx...mfz75" });
+client.login({
+    authMethod: "google",
+    oauthRefreshToken: "1%2F%2F0dx...mfz75",
+    xsrfToken: "uE9Tm4sXtk4wHEz4tZFJyANB",
+});
+//xsrfToken is optional and only needed for linking a device and payout
 ```
 
 <a name="logout"></a>
@@ -364,7 +448,10 @@ Get the available payment methods.
 ```js
 {
 
-    paypal: Object,
+    paypal: {
+        enabled: Boolean,
+        min_redeem: Number,
+    },
     amazon: Array,
 
 }
@@ -405,7 +492,15 @@ Get user referrals.
 **Returns**:
 
 ```js
-Referrals[];
+{
+    total: Number,
+    list: Referrals[],
+    pagination: {
+        page: Number,
+        size: Number,
+        max: Number,
+    },
+}
 ```
 
 ```js
@@ -436,19 +531,44 @@ Use client.<a href="#linkDevice">linkDevice(uuid)</a> to link it to your account
 ```js
 {
 
-    status: String,
+    ok: Number,
 
 }
 ```
 
-| Param | Type                | Description |
-| ----- | ------------------- | ----------- |
-| uuid  | <code>String</code> | device uuid |
+| Param   | Type                | Description |
+| ------- | ------------------- | ----------- |
+| uuid    | <code>String</code> | device uuid |
+| version | <code>String</code> | app version |
+| arch    | <code>String</code> | device arch |
+| appid   | <code>String</code> | app id      |
+
+**Available arch and appID:**
+
+| Arch                 | AppID                                  |
+| -------------------- | -------------------------------------- |
+| <code>arm</code>     | <code>node_earnapp.com</code>          |
+| <code>arm64</code>   | <code>node_earnapp.com</code>          |
+| <code>x64</code>     | <code>node_earnapp.com</code> (Linux)  |
+| <code>x64</code>     | <code>win_earnapp.com</code> (Windows) |
+| <code>android</code> | <code>com.eapp</code>                  |
+| <code>?</code>       | <code>mac_earnapp.com</code>           |
 
 **Example**
 
 ```js
-client.registerDevice("sdk-win-7744606f9f7b42d5b99d11e80f70886c");
+client.registerDevice(
+    "sdk-win-7744606f9f7b42d5b99d11e80f70886c",
+    "1.295.874",
+    "x64",
+    "win_earnapp.com"
+);
+client.registerDevice(
+    "sdk-node-6fd29568de6f481887ccf0ddea29dcca",
+    "1.293.301",
+    "x64",
+    "node_earnapp.com"
+);
 ```
 
 <a name="remove"></a>
@@ -475,7 +595,30 @@ Remove a device.
 **Example**
 
 ```js
-client.rename("sdk-win-7744606f9f7b42d5b99d11e80f70886c", "new name");
+client.remove("sdk-win-7744606f9f7b42d5b99d11e80f70886c");
+```
+
+<a name="removeAutoRedeem"></a>
+
+## removeAutoRedeem() ⇒ <code>Promise</code>
+
+Remove auto redeem.
+
+**Kind**: method  
+**Returns**:
+
+```js
+{
+
+    status: String,
+
+}
+```
+
+**Example**
+
+```js
+client.removeAutoRedeem();
 ```
 
 <a name="rename"></a>
@@ -504,6 +647,33 @@ Rename a device.
 
 ```js
 client.rename("sdk-win-7744606f9f7b42d5b99d11e80f70886c", "new name");
+```
+
+<a name="show"></a>
+
+## show(uuid) ⇒ <code>Promise</code>
+
+Show a device.
+
+**Kind**: method  
+**Returns**:
+
+```js
+{
+
+    status: String,
+
+}
+```
+
+| Param | Type                | Description |
+| ----- | ------------------- | ----------- |
+| uuid  | <code>String</code> | device uuid |
+
+**Example**
+
+```js
+client.show("sdk-win-7744606f9f7b42d5b99d11e80f70886c");
 ```
 
 <a name="setPaymentDetails"></a>
@@ -548,7 +718,13 @@ Get user stats.
     tokens: Number,
     earnings_total:: Number,
     multiplier: Number,
-    redeem_details: Object,
+    multiplier_icon: String,
+    multiplier_hint: String,
+    redeem_details: {
+        email: String,
+        payment_method: String,
+        min_redeem: Number,
+    },
     ref_bonuses: Number,
     ref_bonuses_total: Number,
     promo_bonuses: Number,
@@ -584,8 +760,6 @@ Transaction {
     date: String,
     payment_method: String,
     payment_date: Number,
-    devices: Array,
-    bw_amount: Number,
     money_amount: Number,
     ref_bonuses_amount: Number,
     promo_bonuses_amount: Number,
@@ -596,6 +770,33 @@ Transaction {
 
 ```js
 client.transactions();
+```
+
+<a name="usage"></a>
+
+## usage() ⇒ <code>Promise</code>
+
+Get user devices usage..
+
+**Kind**: method  
+**Returns**:
+
+```js
+Usage[];
+```
+
+```js
+Usage {
+    _id: String,
+    name: String,
+    data: Object,
+}
+```
+
+**Example**
+
+```js
+client.usage();
 ```
 
 <a name="userData"></a>
@@ -615,8 +816,8 @@ Get your user data.
     locale: String,
     picture: String,
     referral_code: String,
-    onboarding: String,
     email: String,
+    is_piggybox: Boolean,
 }
 ```
 
@@ -642,7 +843,7 @@ Error related to the API
     type: String,
     status: Number,
     method: String,
-    url: String,s
+    url: String,
     error: String
 }
 ```

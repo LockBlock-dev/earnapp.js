@@ -26,6 +26,12 @@ class Client {
      * @private
      */
     #authCookies = "";
+    /**
+     * CSRF token
+     * @type {string}
+     * @private
+     */
+    #xsrfToken = "";
 
     /**
      * Make request against the API
@@ -41,9 +47,12 @@ class Client {
             method,
             url: `${this.API_URL}/${path}?appid=earnapp_dashboard`,
             headers: {
-                "User-Agent": `earnapp.js ${require("../package.json").version} (https://github.com/LockBlock-dev/earnapp.js)`,
+                "User-Agent": `earnapp.js ${
+                    require("../package.json").version
+                } (https://github.com/LockBlock-dev/earnapp.js)`,
                 "Content-Type": "application/json",
                 "Accept-Encoding": "UTF8",
+                "xsrf-token": this.#xsrfToken,
                 Cookie: this.#authCookies,
             },
             ...reqOptions,
@@ -57,14 +66,25 @@ class Client {
                     try {
                         return { status: response.data.toLowerCase() };
                     } catch (err) {
-                        throw new errors.ParseError(response.data, response.status, options.method, options.url);
+                        throw new errors.ParseError(
+                            response.data,
+                            response.status,
+                            options.method,
+                            options.url
+                        );
                     }
                 }
             })
             .catch((error) => {
                 throw error.type === "ParseError"
                     ? error
-                    : new errors.APIError(error, error.response, error.response.status, options.method, options.url);
+                    : new errors.APIError(
+                          error,
+                          error.response,
+                          error.response.status,
+                          options.method,
+                          options.url
+                      );
             });
     }
 
@@ -73,13 +93,15 @@ class Client {
      * @param {Object} authCookies
      * @param {string} authCookies.authMethod authentication method
      * @param {string} authCookies.oauthRefreshToken OAuth refresh token
-     * @example client.login({ authMethod: "google", oauthRefreshToken: "1%2F%2F0dx...mfz75" });
+     * @param {string} authCookies.xsrfToken CSRF token
+     * @example client.login({ authMethod: "google", oauthRefreshToken: "1%2F%2F0dx...mfz75", xsrfToken: "uE9Tm4sXtk4wHEz4tZFJyANB" });
      * @returns {Promise<Object>}
      */
     async login(authCookies) {
         let cookies = {
             "auth-method": authCookies.authMethod,
             "oauth-refresh-token": authCookies.oauthRefreshToken,
+            "xsrf-token": authCookies.xsrfToken || "",
         };
 
         Object.keys(cookies).forEach((c) => {
@@ -87,16 +109,18 @@ class Client {
             this.#authCookies += `${c}=${cookies[c]} `;
         });
 
+        this.#xsrfToken = authCookies.xsrfToken || "";
+
         return { status: "ok" };
     }
 
     /**
      * Get the app versions.
-     * @example client.appVersions();
+     * @example client.downloads();
      * @returns {Promise<Object>}
      */
-    appVersions() {
-        return this.#request("GET", "app_versions");
+    downloads() {
+        return this.#request("GET", "downloads");
     }
 
     /**
@@ -210,9 +234,13 @@ class Client {
 
     /**
      * Register a new device on EarnApp database.
-     * Use client.linkDevice(uuid) to link it to your account.
+     * Use client.linkDevice(uuid, versio, arch, appid) to link it to your account.
      * @param {string} uuid device uuid
-     * @example client.registerDevice("sdk-win-7744606f9f7b42d5b99d11e80f70886c");
+     * @param {string} version app version
+     * @param {string} arch device arch
+     * @param {string} appid app id
+     * @example client.registerDevice("sdk-win-7744606f9f7b42d5b99d11e80f70886c", "1.295.874", "x64", "win_earnapp.com");
+     * @example client.registerDevice("sdk-win-6fd29568de6f481887ccf0ddea29dcca", "1.293.301", "x64", "node_earnapp.com");
      * @returns {Promise<Object>}
      */
     registerDevice(uuid, version, arch, appid) {
@@ -220,10 +248,9 @@ class Client {
             url: `${this.CLIENT_API_URL}/install_device`,
             data: {
                 uuid: uuid,
-                version: "1.261.303",
-                arch: process.arch,
-                appid: "node_earnapp.com",
-                //win_earnapp.com
+                version: version,
+                arch: arch || process.arch,
+                appid: appid,
             },
         });
     }
@@ -238,7 +265,9 @@ class Client {
      * @returns {Promise<Object>}
      */
     setPaymentDetails(email, method) {
-        return this.#request("POST", "redeem_details", { data: { to: email, payment_method: method } });
+        return this.#request("POST", "redeem_details", {
+            data: { to: email, payment_method: method },
+        });
     }
 
     /**
@@ -251,8 +280,16 @@ class Client {
      * @returns {Promise<Object>}
      */
     redeem(email, method) {
-        process.emitWarning("The redeem method is currently disabled.", "DisabledMethodWarning");
         return this.#request("POST", "redeem", { data: { to: email, payment_method: method } });
+    }
+
+    /**
+     * Remove auto redeem.
+     * @example client.removeAutoRedeem();
+     * @returns {Promise<Object>}
+     */
+    removeAutoRedeem() {
+        return this.#request("DELETE", "redeem_details");
     }
 
     /**
@@ -282,7 +319,7 @@ class Client {
      * @returns {Promise<Object>}
      */
     rename(uuid, name) {
-        return this.#request("PUT", `device/${uuid}`, { data: { name: name } });
+        return this.#request("PUT", `edit_device/${uuid}`, { data: { name: name } });
     }
 
     /**
@@ -293,6 +330,45 @@ class Client {
      */
     remove(uuid) {
         return this.#request("DELETE", `device/${uuid}`);
+    }
+
+    /**
+     * Hide a device.
+     * @param {string} uuid device uuid
+     * @example client.hide("sdk-win-7744606f9f7b42d5b99d11e80f70886c");
+     * @returns {Promise<Object>}
+     */
+    hide(uuid) {
+        return this.#request("PUT", "hide_device", { data: { uuid: uuid } });
+    }
+
+    /**
+     * Show a device.
+     * @param {string} uuid device uuid
+     * @example client.show("sdk-win-7744606f9f7b42d5b99d11e80f70886c");
+     * @returns {Promise<Object>}
+     */
+    show(uuid) {
+        return this.#request("PUT", "show_device", { data: { uuid: uuid } });
+    }
+
+    /**
+     * Get user devices usage.
+     * @example client.usage();
+     * @returns {Promise<Object>}
+     */
+    usage() {
+        return this.#request("GET", "usage");
+    }
+
+    /**
+     * Get user devices status.
+     * @param {string} list devices list
+     * @example client.devicesStatus([{ uuid: "sdk-win-7744606f9f7b42d5b99d11e80f70886c", appid: "win_earnapp.com" }]);
+     * @returns {Promise<Object>}
+     */
+    devicesStatus(list) {
+        return this.#request("POST", "device_statuses", { data: { list: list } });
     }
 }
 
