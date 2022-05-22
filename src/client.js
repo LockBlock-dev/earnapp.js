@@ -234,11 +234,11 @@ class Client {
 
     /**
      * Register a new device on EarnApp database.
-     * Use client.linkDevice(uuid, versio, arch, appid) to link it to your account.
+     * Use client.linkDevice to link it to your account.
      * @param {string} uuid device uuid
      * @param {string} version app version
-     * @param {string} arch device arch
-     * @param {string} appid app id
+     * @param {string} arch device arch: arm, arm64, x64, android
+     * @param {string} appid app id: node_earnapp.com, win_earnapp.com,	com.eapp, mac_earnapp.com
      * @example client.registerDevice("sdk-win-7744606f9f7b42d5b99d11e80f70886c", "1.295.874", "x64", "win_earnapp.com");
      * @example client.registerDevice("sdk-win-6fd29568de6f481887ccf0ddea29dcca", "1.293.301", "x64", "node_earnapp.com");
      * @returns {Promise<Object>}
@@ -259,7 +259,7 @@ class Client {
      * Set your payment details.
      * @param {string} email paypal / amazon email
      * @param {string} method methods:
-     * to see methods do client.paymentMethods()
+     * to see methods do client.paymentMethods
      * @example client.setPaymentDetails("mail@domain.com", "paypal.com");
      * @example client.setPaymentDetails("mail@domain.com", "amazon.com (US/Global)");
      * @returns {Promise<Object>}
@@ -274,7 +274,7 @@ class Client {
      * Redeem your balance.
      * @param {string} email paypal / amazon email
      * @param {string} method methods:
-     * to see methods do client.paymentMethods()
+     * to see methods do client.paymentMethods
      * @example client.redeem("mail@domain.com", "paypal.com");
      * @example client.redeem("mail@domain.com", "amazon.com (US/Global)");
      * @returns {Promise<Object>}

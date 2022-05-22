@@ -1,6 +1,6 @@
 {
     "name": "earnapp.js",
-    "version": "1.4.0",
+    "version": "1.4.1",
     "description": "A JavaScript library for interacting with the EarnApp API",
     "main": "src/client.js",
     "exports": {
@@ -25,5 +25,8 @@
     "homepage": "https://github.com/LockBlock-dev/earnapp.js#readme",
     "keywords": [
         "API"
-    ]
+    ],
+    "devDependencies": {
+        "jsdoc-to-markdown": "^7.1.1"
+    }
 }
