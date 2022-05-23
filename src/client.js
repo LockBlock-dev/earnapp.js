@@ -1,5 +1,6 @@
 const axios = require("axios").default;
 const errors = require("./errors");
+const pkg = require("../package.json");
 
 class Client {
     /**
@@ -47,9 +48,7 @@ class Client {
             method,
             url: `${this.API_URL}/${path}?appid=earnapp_dashboard`,
             headers: {
-                "User-Agent": `earnapp.js ${
-                    require("../package.json").version
-                } (https://github.com/LockBlock-dev/earnapp.js)`,
+                "User-Agent": `earnapp.js ${pkg.version} (https://github.com/LockBlock-dev/earnapp.js)`,
                 "Content-Type": "application/json",
                 "Accept-Encoding": "UTF8",
                 "xsrf-token": this.#xsrfToken,
