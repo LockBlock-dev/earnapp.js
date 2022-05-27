@@ -1,6 +1,6 @@
 {
     "name": "earnapp.js",
-    "version": "1.4.2",
+    "version": "2.0.0",
     "description": "A JavaScript library for interacting with the EarnApp API",
     "main": "src/client.js",
     "exports": {
@@ -11,7 +11,8 @@
         "axios": "^0.27.2"
     },
     "scripts": {
-        "start": "node index.js"
+        "start": "node index.js",
+        "doc": "npx jsdoc2md src/*.js > API.md"
     },
     "repository": {
         "type": "git",

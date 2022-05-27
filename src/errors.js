@@ -74,7 +74,9 @@ class APIError extends BaseError {
         this.url = url;
 
         if (response.data) {
-            typeof response.data === "object" ? Object.assign(this, response.data) : (this.error = response.data);
+            typeof response.data === "object"
+                ? Object.assign(this, response.data)
+                : (this.error = response.data);
         }
     }
 }
@@ -82,7 +84,7 @@ class APIError extends BaseError {
 class ParseError extends BaseError {
     /**
      * Represents a parsing error.
-     * @class ParseError
+     * @extends BaseError
      * @constructor
      * @param {String} message error message
      * @param {String} status status type of the request

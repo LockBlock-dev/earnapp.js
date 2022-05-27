@@ -1,3 +1,15 @@
+# Upgrading from version 1.X.X to version 2.X.X
+
+All methods that requires authentication (dashboard API) are moved to <code>client.dashboard</code>.  
+example:
+
+```diff
+- client.stats()
++ client.dashboard.stats()
+```
+
+The methods left on <code>client</code> don't need authentication and are uuid bound.
+
 # EarnApp.js
 
 [![axios](https://img.shields.io/github/package-json/dependency-version/LockBlock-dev/earnapp.js/axios)](https://www.npmjs.com/package/axios)
@@ -46,18 +58,19 @@ import { Client } from "earnapp.js";
 
 const client = new Client();
 
-client.login({
+client.dashboard.login({
     authMethod: "google",
     oauthRefreshToken: "1%2F%2F0dx...mfz75",
-    xsrfToken: "uE9Tm4sXtk4wHEz4tZFJyANB", //needed for endpoints like linking a device / or making a payout
+    xsrfToken: "uE9Tm4sXtk4wHEz4tZFJyANB",
+    //needed for endpoints like linking a device / or making a payout
 });
 
-client.stats().then((data) => {
+client.dashboard.stats().then((data) => {
     console.log(data);
 });
 //OR
 const getStats = async () => {
-    const data = await client.stats();
+    const data = await client.dashboard.stats();
     console.log(data);
 };
 

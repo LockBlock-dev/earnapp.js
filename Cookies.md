@@ -4,6 +4,10 @@ The library uses 2 cookies to connect to EarnApp.
 These cookies are subject to expiration, they may not work indefinitely.  
 To get these cookies you need to:
 
+### Sidenote :
+
+This method applies to all cookies you might need (auth, xsrf, ...)
+
 ### Method 1: Cookies storage
 
 -   go to the EarnApp <a href="https://earnapp.com/dashboard">dashboard</a>
@@ -26,12 +30,14 @@ To get these cookies you need to:
 
 ### Final step
 
--   write the cookies in the client.login function:
+-   write the cookies in the client.dashboard.login function:
 
 ```js
-client.login({
+client.dashboard.login({
     authMethod: "google",
     oauthRefreshToken: "1%2F%2F0dx...mfz75",
     //don't include 'set-cookie: oauth-refresh-token='
+    xsrfToken: "uE9Tm4sXtk4wHEz4tZFJyANB",
+    //needed for endpoints like linking a device / or making a payout
 });
 ```
