@@ -2,6 +2,7 @@ const axios = require("axios").default;
 const errors = require("./errors");
 const pkg = require("../package.json");
 const { Dashboard } = require("./dashboard.js");
+const { PiggyBox } = require("./piggybox.js");
 
 class Client {
     /**
@@ -20,6 +21,12 @@ class Client {
          * @type {Dashboard}
          */
         this.dashboard = new Dashboard();
+
+        /**
+         * The PiggyBox dashboard client
+         * @type {PiggyBox}
+         */
+        this.piggybox = new PiggyBox();
     }
 
     /**
@@ -100,7 +107,7 @@ class Client {
      * @param {string} uuid device uuid
      * @param {string} version app version
      * @param {string} arch device arch: arm, arm64, x64, android
-     * @param {string} appid app id: node_earnapp.com, win_earnapp.com,	com.eapp, mac_earnapp.com
+     * @param {string} appid app id: node_earnapp.com, win_earnapp.com,	com.eapp, mac_com.earnapp
      * @example client.deviceStats("sdk-win-7744606f9f7b42d5b99d11e80f70886c", "1.295.874", "x64", "win_earnapp.com");
      * @example client.deviceStats("sdk-node-6fd29568de6f481887ccf0ddea29dcca", "1.293.301", "x64", "node_earnapp.com");
      * @returns {Promise<Object>}

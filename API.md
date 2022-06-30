@@ -11,6 +11,8 @@
 <dd></dd>
 <dt><a href="#ParseError">ParseError</a> ⇐ <code><a href="#new_BaseError_new">BaseError</a></code></dt>
 <dd></dd>
+<dt><a href="#PiggyBox">PiggyBox</a></dt>
+<dd></dd>
 </dl>
 
 <a name="Client"></a>
@@ -22,6 +24,7 @@
     * [new Client()](#new_Client_new)
     * [.CLIENT_API_URL](#Client+CLIENT_API_URL) : <code>string</code>
     * [.dashboard](#Client+dashboard) : [<code>Dashboard</code>](#Dashboard)
+    * [.piggybox](#Client+piggybox) : [<code>PiggyBox</code>](#PiggyBox)
     * [.registerDevice(uuid, version, arch, appid)](#Client+registerDevice) ⇒ <code>Promise.&lt;Object&gt;</code>
     * [.deviceStats(uuid, version, arch, appid)](#Client+deviceStats) ⇒ <code>Promise.&lt;Object&gt;</code>
 
@@ -44,6 +47,12 @@ The client API URL
 
 ### client.dashboard : [<code>Dashboard</code>](#Dashboard)
 The EarnApp dashboard client
+
+**Kind**: instance property of [<code>Client</code>](#Client)  
+<a name="Client+piggybox"></a>
+
+### client.piggybox : [<code>PiggyBox</code>](#PiggyBox)
+The PiggyBox dashboard client
 
 **Kind**: instance property of [<code>Client</code>](#Client)  
 <a name="Client+registerDevice"></a>
@@ -81,7 +90,7 @@ Get a device stats on EarnApp database.
 | uuid | <code>string</code> | device uuid |
 | version | <code>string</code> | app version |
 | arch | <code>string</code> | device arch: arm, arm64, x64, android |
-| appid | <code>string</code> | app id: node_earnapp.com, win_earnapp.com,	com.eapp, mac_earnapp.com |
+| appid | <code>string</code> | app id: node_earnapp.com, win_earnapp.com,	com.eapp, mac_com.earnapp |
 
 **Example**  
 ```js
@@ -108,10 +117,8 @@ client.deviceStats("sdk-node-6fd29568de6f481887ccf0ddea29dcca", "1.293.301", "x6
     * [.stats()](#Dashboard+stats) ⇒ <code>Promise.&lt;Object&gt;</code>
     * [.referrals()](#Dashboard+referrals) ⇒ <code>Promise.&lt;Object&gt;</code>
     * [.counters()](#Dashboard+counters) ⇒ <code>Promise.&lt;Object&gt;</code>
-    * [.offers()](#Dashboard+offers) ⇒ <code>Promise.&lt;Object&gt;</code>
     * [.promotions()](#Dashboard+promotions) ⇒ <code>Promise.&lt;Object&gt;</code>
     * [.notifications()](#Dashboard+notifications) ⇒ <code>Promise.&lt;Object&gt;</code>
-    * [.leaderboard()](#Dashboard+leaderboard) ⇒ <code>Promise.&lt;Object&gt;</code>
     * [.linkDevice(uuid)](#Dashboard+linkDevice) ⇒ <code>Promise.&lt;Object&gt;</code>
     * [.setPaymentDetails(email, method)](#Dashboard+setPaymentDetails) ⇒ <code>Promise.&lt;Object&gt;</code>
     * [.redeem(email, method)](#Dashboard+redeem) ⇒ <code>Promise.&lt;Object&gt;</code>
@@ -122,8 +129,9 @@ client.deviceStats("sdk-node-6fd29568de6f481887ccf0ddea29dcca", "1.293.301", "x6
     * [.remove(uuid)](#Dashboard+remove) ⇒ <code>Promise.&lt;Object&gt;</code>
     * [.hide(uuid)](#Dashboard+hide) ⇒ <code>Promise.&lt;Object&gt;</code>
     * [.show(uuid)](#Dashboard+show) ⇒ <code>Promise.&lt;Object&gt;</code>
-    * [.usage()](#Dashboard+usage) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [.usage(step)](#Dashboard+usage) ⇒ <code>Promise.&lt;Object&gt;</code>
     * [.devicesStatus(list)](#Dashboard+devicesStatus) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [.brightvpnReferrals()](#Dashboard+brightvpnReferrals) ⇒ <code>Promise.&lt;Object&gt;</code>
 
 <a name="new_Dashboard_new"></a>
 
@@ -238,16 +246,6 @@ Get counters before balances update and auto redeem.
 ```js
 client.dashboard.stats();
 ```
-<a name="Dashboard+offers"></a>
-
-### dashboard.offers() ⇒ <code>Promise.&lt;Object&gt;</code>
-Get EarnApp current offers.
-
-**Kind**: instance method of [<code>Dashboard</code>](#Dashboard)  
-**Example**  
-```js
-client.dashboard.offers();
-```
 <a name="Dashboard+promotions"></a>
 
 ### dashboard.promotions() ⇒ <code>Promise.&lt;Object&gt;</code>
@@ -267,16 +265,6 @@ Get EarnApp current notifications.
 **Example**  
 ```js
 client.dashboard.notifications();
-```
-<a name="Dashboard+leaderboard"></a>
-
-### dashboard.leaderboard() ⇒ <code>Promise.&lt;Object&gt;</code>
-Get contest leaderboard.
-
-**Kind**: instance method of [<code>Dashboard</code>](#Dashboard)  
-**Example**  
-```js
-client.dashboard.leaderboard();
 ```
 <a name="Dashboard+linkDevice"></a>
 
@@ -431,13 +419,18 @@ client.dashboard.show("sdk-win-7744606f9f7b42d5b99d11e80f70886c");
 ```
 <a name="Dashboard+usage"></a>
 
-### dashboard.usage() ⇒ <code>Promise.&lt;Object&gt;</code>
+### dashboard.usage(step) ⇒ <code>Promise.&lt;Object&gt;</code>
 Get user devices usage.
 
 **Kind**: instance method of [<code>Dashboard</code>](#Dashboard)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| step | <code>string</code> | usage step: daily, weekly, monthly |
+
 **Example**  
 ```js
-client.dashboard.usage();
+client.dashboard.usage("daily");
 ```
 <a name="Dashboard+devicesStatus"></a>
 
@@ -453,6 +446,16 @@ Get user devices status.
 **Example**  
 ```js
 client.dashboard.devicesStatus([{ uuid: "sdk-win-7744606f9f7b42d5b99d11e80f70886c", appid: "win_earnapp.com" }]);
+```
+<a name="Dashboard+brightvpnReferrals"></a>
+
+### dashboard.brightvpnReferrals() ⇒ <code>Promise.&lt;Object&gt;</code>
+Get user BrightVPN referrals.
+
+**Kind**: instance method of [<code>Dashboard</code>](#Dashboard)  
+**Example**  
+```js
+client.dashboard.brightvpnReferrals();
 ```
 <a name="FatalError"></a>
 
@@ -581,3 +584,344 @@ url of the request to the endpoint
 error type
 
 **Kind**: instance property of [<code>ParseError</code>](#ParseError)  
+<a name="PiggyBox"></a>
+
+## PiggyBox
+**Kind**: global class  
+
+* [PiggyBox](#PiggyBox)
+    * [new PiggyBox()](#new_PiggyBox_new)
+    * [.API_URL](#PiggyBox+API_URL) : <code>string</code>
+    * [.login(authCookies)](#PiggyBox+login) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [.downloads()](#PiggyBox+downloads) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [.paymentMethods()](#PiggyBox+paymentMethods) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [.userData()](#PiggyBox+userData) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [.devices()](#PiggyBox+devices) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [.transactions()](#PiggyBox+transactions) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [.stats()](#PiggyBox+stats) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [.referrals()](#PiggyBox+referrals) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [.counters()](#PiggyBox+counters) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [.promotions()](#PiggyBox+promotions) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [.notifications()](#PiggyBox+notifications) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [.linkDevice(uuid)](#PiggyBox+linkDevice) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [.setPaymentDetails(email, method)](#PiggyBox+setPaymentDetails) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [.redeem(email, method)](#PiggyBox+redeem) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [.removeAutoRedeem()](#PiggyBox+removeAutoRedeem) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [.logout()](#PiggyBox+logout) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [.rename(uuid, name)](#PiggyBox+rename) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [.remove(uuid)](#PiggyBox+remove) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [.hide(uuid)](#PiggyBox+hide) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [.show(uuid)](#PiggyBox+show) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [.usage(step)](#PiggyBox+usage) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [.devicesStatus(list)](#PiggyBox+devicesStatus) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [.brightvpnReferrals()](#PiggyBox+brightvpnReferrals) ⇒ <code>Promise.&lt;Object&gt;</code>
+
+<a name="new_PiggyBox_new"></a>
+
+### new PiggyBox()
+The PiggyBox dashboard client
+
+**Example**  
+```js
+const dashboard = new PiggyBox();
+```
+<a name="PiggyBox+API_URL"></a>
+
+### piggyBox.API\_URL : <code>string</code>
+The base API URL
+
+**Kind**: instance property of [<code>PiggyBox</code>](#PiggyBox)  
+<a name="PiggyBox+login"></a>
+
+### piggyBox.login(authCookies) ⇒ <code>Promise.&lt;Object&gt;</code>
+Log into EarnApp.
+
+**Kind**: instance method of [<code>PiggyBox</code>](#PiggyBox)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| authCookies | <code>Object</code> |  |
+| authCookies.authMethod | <code>string</code> | authentication method |
+| authCookies.oauthRefreshToken | <code>string</code> | OAuth refresh token |
+| authCookies.xsrfToken | <code>string</code> | CSRF token |
+
+**Example**  
+```js
+client.dashboard.login({ authMethod: "google", oauthRefreshToken: "1%2F%2F0dx...mfz75", xsrfToken: "uE9Tm4sXtk4wHEz4tZFJyANB" });
+```
+<a name="PiggyBox+downloads"></a>
+
+### piggyBox.downloads() ⇒ <code>Promise.&lt;Object&gt;</code>
+Get the app versions.
+
+**Kind**: instance method of [<code>PiggyBox</code>](#PiggyBox)  
+**Example**  
+```js
+client.dashboard.downloads();
+```
+<a name="PiggyBox+paymentMethods"></a>
+
+### piggyBox.paymentMethods() ⇒ <code>Promise.&lt;Object&gt;</code>
+Get the available payment methods.
+
+**Kind**: instance method of [<code>PiggyBox</code>](#PiggyBox)  
+**Example**  
+```js
+client.dashboard.paymentMethods();
+```
+<a name="PiggyBox+userData"></a>
+
+### piggyBox.userData() ⇒ <code>Promise.&lt;Object&gt;</code>
+Get your user data.
+
+**Kind**: instance method of [<code>PiggyBox</code>](#PiggyBox)  
+**Example**  
+```js
+client.dashboard.userData();
+```
+<a name="PiggyBox+devices"></a>
+
+### piggyBox.devices() ⇒ <code>Promise.&lt;Object&gt;</code>
+Get user devices.
+
+**Kind**: instance method of [<code>PiggyBox</code>](#PiggyBox)  
+**Example**  
+```js
+client.dashboard.devices();
+```
+<a name="PiggyBox+transactions"></a>
+
+### piggyBox.transactions() ⇒ <code>Promise.&lt;Object&gt;</code>
+Get user transactions.
+
+**Kind**: instance method of [<code>PiggyBox</code>](#PiggyBox)  
+**Example**  
+```js
+client.dashboard.transactions();
+```
+<a name="PiggyBox+stats"></a>
+
+### piggyBox.stats() ⇒ <code>Promise.&lt;Object&gt;</code>
+Get user stats.
+
+**Kind**: instance method of [<code>PiggyBox</code>](#PiggyBox)  
+**Example**  
+```js
+client.dashboard.stats();
+```
+<a name="PiggyBox+referrals"></a>
+
+### piggyBox.referrals() ⇒ <code>Promise.&lt;Object&gt;</code>
+Get user referrals.
+
+**Kind**: instance method of [<code>PiggyBox</code>](#PiggyBox)  
+**Example**  
+```js
+client.dashboard.referrals();
+```
+<a name="PiggyBox+counters"></a>
+
+### piggyBox.counters() ⇒ <code>Promise.&lt;Object&gt;</code>
+Get counters before balances update and auto redeem.
+
+**Kind**: instance method of [<code>PiggyBox</code>](#PiggyBox)  
+**Example**  
+```js
+client.dashboard.stats();
+```
+<a name="PiggyBox+promotions"></a>
+
+### piggyBox.promotions() ⇒ <code>Promise.&lt;Object&gt;</code>
+Get user promotions.
+
+**Kind**: instance method of [<code>PiggyBox</code>](#PiggyBox)  
+**Example**  
+```js
+client.dashboard.offers();
+```
+<a name="PiggyBox+notifications"></a>
+
+### piggyBox.notifications() ⇒ <code>Promise.&lt;Object&gt;</code>
+Get EarnApp current notifications.
+
+**Kind**: instance method of [<code>PiggyBox</code>](#PiggyBox)  
+**Example**  
+```js
+client.dashboard.notifications();
+```
+<a name="PiggyBox+linkDevice"></a>
+
+### piggyBox.linkDevice(uuid) ⇒ <code>Promise.&lt;Object&gt;</code>
+Link a new device to your account.
+
+**Kind**: instance method of [<code>PiggyBox</code>](#PiggyBox)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| uuid | <code>string</code> | device uuid |
+
+**Example**  
+```js
+client.dashboard.linkDevice("sdk-win-7744606f9f7b42d5b99d11e80f70886c");
+```
+<a name="PiggyBox+setPaymentDetails"></a>
+
+### piggyBox.setPaymentDetails(email, method) ⇒ <code>Promise.&lt;Object&gt;</code>
+Set your payment details.
+
+**Kind**: instance method of [<code>PiggyBox</code>](#PiggyBox)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| email | <code>string</code> | paypal / amazon email |
+| method | <code>string</code> | methods: to see methods do client.dashboard.paymentMethods |
+
+**Example**  
+```js
+client.dashboard.setPaymentDetails("mail@domain.com", "paypal.com");
+```
+**Example**  
+```js
+client.dashboard.setPaymentDetails("mail@domain.com", "amazon.com (US/Global)");
+```
+<a name="PiggyBox+redeem"></a>
+
+### piggyBox.redeem(email, method) ⇒ <code>Promise.&lt;Object&gt;</code>
+Redeem your balance.
+
+**Kind**: instance method of [<code>PiggyBox</code>](#PiggyBox)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| email | <code>string</code> | paypal / amazon email |
+| method | <code>string</code> | methods: to see methods do client.dashboard.paymentMethods |
+
+**Example**  
+```js
+client.dashboard.redeem("mail@domain.com", "paypal.com");
+```
+**Example**  
+```js
+client.dashboard.redeem("mail@domain.com", "amazon.com (US/Global)");
+```
+<a name="PiggyBox+removeAutoRedeem"></a>
+
+### piggyBox.removeAutoRedeem() ⇒ <code>Promise.&lt;Object&gt;</code>
+Remove auto redeem.
+
+**Kind**: instance method of [<code>PiggyBox</code>](#PiggyBox)  
+**Example**  
+```js
+client.dashboard.removeAutoRedeem();
+```
+<a name="PiggyBox+logout"></a>
+
+### piggyBox.logout() ⇒ <code>Promise.&lt;Object&gt;</code>
+Log out of your account.
+
+**Kind**: instance method of [<code>PiggyBox</code>](#PiggyBox)  
+**Example**  
+```js
+client.dashboard.logout();
+```
+<a name="PiggyBox+rename"></a>
+
+### piggyBox.rename(uuid, name) ⇒ <code>Promise.&lt;Object&gt;</code>
+Rename a device.
+
+**Kind**: instance method of [<code>PiggyBox</code>](#PiggyBox)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| uuid | <code>string</code> | device uuid |
+| name | <code>string</code> | new device name |
+
+**Example**  
+```js
+client.dashboard.rename("sdk-win-7744606f9f7b42d5b99d11e80f70886c", "new name");
+```
+<a name="PiggyBox+remove"></a>
+
+### piggyBox.remove(uuid) ⇒ <code>Promise.&lt;Object&gt;</code>
+Remove a device.
+
+**Kind**: instance method of [<code>PiggyBox</code>](#PiggyBox)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| uuid | <code>string</code> | device uuid |
+
+**Example**  
+```js
+client.dashboard.remove("sdk-win-7744606f9f7b42d5b99d11e80f70886c");
+```
+<a name="PiggyBox+hide"></a>
+
+### piggyBox.hide(uuid) ⇒ <code>Promise.&lt;Object&gt;</code>
+Hide a device.
+
+**Kind**: instance method of [<code>PiggyBox</code>](#PiggyBox)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| uuid | <code>string</code> | device uuid |
+
+**Example**  
+```js
+client.dashboard.hide("sdk-win-7744606f9f7b42d5b99d11e80f70886c");
+```
+<a name="PiggyBox+show"></a>
+
+### piggyBox.show(uuid) ⇒ <code>Promise.&lt;Object&gt;</code>
+Show a device.
+
+**Kind**: instance method of [<code>PiggyBox</code>](#PiggyBox)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| uuid | <code>string</code> | device uuid |
+
+**Example**  
+```js
+client.dashboard.show("sdk-win-7744606f9f7b42d5b99d11e80f70886c");
+```
+<a name="PiggyBox+usage"></a>
+
+### piggyBox.usage(step) ⇒ <code>Promise.&lt;Object&gt;</code>
+Get user devices usage.
+
+**Kind**: instance method of [<code>PiggyBox</code>](#PiggyBox)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| step | <code>string</code> | usage step: daily, weekly, monthly |
+
+**Example**  
+```js
+client.dashboard.usage("daily");
+```
+<a name="PiggyBox+devicesStatus"></a>
+
+### piggyBox.devicesStatus(list) ⇒ <code>Promise.&lt;Object&gt;</code>
+Get user devices status.
+
+**Kind**: instance method of [<code>PiggyBox</code>](#PiggyBox)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| list | <code>string</code> | devices list |
+
+**Example**  
+```js
+client.dashboard.devicesStatus([{ uuid: "sdk-win-7744606f9f7b42d5b99d11e80f70886c", appid: "win_earnapp.com" }]);
+```
+<a name="PiggyBox+brightvpnReferrals"></a>
+
+### piggyBox.brightvpnReferrals() ⇒ <code>Promise.&lt;Object&gt;</code>
+Get user BrightVPN referrals.
+
+**Kind**: instance method of [<code>PiggyBox</code>](#PiggyBox)  
+**Example**  
+```js
+client.dashboard.brightvpnReferrals();
+```

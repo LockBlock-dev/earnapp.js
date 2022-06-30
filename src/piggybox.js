@@ -2,17 +2,17 @@ const axios = require("axios").default;
 const errors = require("./errors");
 const pkg = require("../package.json");
 
-class Dashboard {
+class PiggyBox {
     /**
-     * The EarnApp dashboard client
-     * @example const dashboard = new Dashboard();
+     * The PiggyBox dashboard client
+     * @example const dashboard = new PiggyBox();
      */
     constructor() {
         /**
          * The base API URL
          * @type {string}
          */
-        this.API_URL = "https://earnapp.com/dashboard/api";
+        this.API_URL = "https://thepiggybox.net/dashboard/api";
     }
 
     /**
@@ -40,7 +40,7 @@ class Dashboard {
     #request(method, path, reqOptions = {}) {
         let options = {
             method,
-            url: `${this.API_URL}/${path}?appid=earnapp_dashboard`,
+            url: `${this.API_URL}/${path}?appid=thepiggybox_dashboard`,
             headers: {
                 "User-Agent": `earnapp.js ${pkg.version} (https://github.com/LockBlock-dev/earnapp.js)`,
                 "Content-Type": "application/json",
@@ -254,16 +254,6 @@ class Dashboard {
     }
 
     /**
-     * Check an ip for EarnApp.
-     * @param {string} ip ip to check
-     * @example client.dashboard.check("1.1.1.1");
-     * @returns {Promise<Object>}
-     */
-    check(ip) {
-        return this.#request("GET", `check_ip/${ip}`);
-    }
-
-    /**
      * Rename a device.
      * @param {string} uuid device uuid
      * @param {string} name new device name
@@ -334,4 +324,4 @@ class Dashboard {
     }
 }
 
-module.exports = { Dashboard };
+module.exports = { PiggyBox };
