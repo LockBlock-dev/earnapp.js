@@ -77,6 +77,28 @@ const getStats = async () => {
 getStats();
 ```
 
+You can also get the CSRF token and login like this:
+
+```js
+const main = async () => {
+    const cookie = "1%2F%2F0dx...mfz75";
+
+    const { token } = await client.dashboard.getCSRF({
+        authMethod: "google",
+        oauthRefreshToken: cookie,
+    });
+
+    client.dashboard.login({
+        authMethod: "google",
+        oauthRefreshToken: cookie,
+        xsrfToken: token,
+        //needed for endpoints like linking a device / or making a payout
+    });
+};
+
+main();
+```
+
 ## Credits
 
 [EarnApp](https://earnapp.com)

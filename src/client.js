@@ -86,7 +86,7 @@ class Client {
      * @param {string} uuid device uuid
      * @param {string} version app version
      * @param {string} arch device arch: arm, arm64, x64, android
-     * @param {string} appid app id: node_earnapp.com, win_earnapp.com,	com.eapp, mac_earnapp.com
+     * @param {string} appid app id: node_earnapp.com, win_earnapp.com,	com.eapp, mac_com.earnapp
      * @example client.registerDevice("sdk-win-7744606f9f7b42d5b99d11e80f70886c", "1.295.874", "x64", "win_earnapp.com");
      * @example client.registerDevice("sdk-node-6fd29568de6f481887ccf0ddea29dcca", "1.293.301", "x64", "node_earnapp.com");
      * @returns {Promise<Object>}

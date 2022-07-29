@@ -26,7 +26,7 @@ class Dashboard {
      * @type {string}
      * @private
      */
-    #xsrfToken = "";
+    #csrfToken = "";
 
     /**
      * Make request against the API
@@ -45,7 +45,7 @@ class Dashboard {
                 "User-Agent": `earnapp.js ${pkg.version} (https://github.com/LockBlock-dev/earnapp.js)`,
                 "Content-Type": "application/json",
                 "Accept-Encoding": "UTF8",
-                "xsrf-token": this.#xsrfToken,
+                "xsrf-token": this.#csrfToken,
                 Cookie: this.#authCookies,
             },
             ...reqOptions,
@@ -53,7 +53,9 @@ class Dashboard {
 
         return axios(options)
             .then((response) => {
-                if (typeof response.data === "object") {
+                if (options.raw) {
+                    return response;
+                } else if (typeof response.data === "object") {
                     return response.data;
                 } else {
                     try {
@@ -82,13 +84,13 @@ class Dashboard {
     }
 
     /**
-     * Log into EarnApp.
+     * Log into the dashboard.
      * @param {Object} authCookies
      * @param {string} authCookies.authMethod authentication method
      * @param {string} authCookies.oauthRefreshToken OAuth refresh token
      * @param {string} authCookies.xsrfToken CSRF token
      * @example client.dashboard.login({ authMethod: "google", oauthRefreshToken: "1%2F%2F0dx...mfz75", xsrfToken: "uE9Tm4sXtk4wHEz4tZFJyANB" });
-     * @returns {Promise<Object>}
+     * @returns {Object}
      */
     login(authCookies) {
         let cookies = {
@@ -102,9 +104,27 @@ class Dashboard {
             this.#authCookies += `${c}=${cookies[c]} `;
         });
 
-        this.#xsrfToken = authCookies.xsrfToken || "";
+        this.#csrfToken = authCookies.xsrfToken || "";
 
         return { status: "ok" };
+    }
+
+    /**
+     * Get the CSRF token from the dashboard. Automatically sets the CSRF token for future requests.
+     * @param {Object} authCookies
+     * @param {string} authCookies.authMethod authentication method
+     * @param {string} authCookies.oauthRefreshToken OAuth refresh token
+     * @example client.dashboard.getCSRF({ authMethod: "google", oauthRefreshToken: "1%2F%2F0dx...mfz75" });
+     * @returns {Promise<Object>}
+     */
+    async getCSRF() {
+        const { headers } = await this.#request("GET", "sec/rotate_xsrf", { raw: true });
+        this.#csrfToken = headers["set-cookie"]
+            .find((c) => c.startsWith("xsrf-token"))
+            .split(";")[0]
+            .split("=")[1];
+
+        return { status: "ok", token: this.#csrfToken };
     }
 
     /**
@@ -232,7 +252,9 @@ class Dashboard {
      * @returns {Promise<Object>}
      */
     redeem(email, method) {
-        return this.#request("POST", "redeem", { data: { to: email, payment_method: method } });
+        return this.#request("POST", "redeem", {
+            data: { to: email, payment_method: method },
+        });
     }
 
     /**
@@ -271,7 +293,9 @@ class Dashboard {
      * @returns {Promise<Object>}
      */
     rename(uuid, name) {
-        return this.#request("PUT", `edit_device/${uuid}`, { data: { name: name } });
+        return this.#request("PUT", `edit_device/${uuid}`, {
+            data: { name: name },
+        });
     }
 
     /**
@@ -316,12 +340,14 @@ class Dashboard {
 
     /**
      * Get user devices status.
-     * @param {string} list devices list
+     * @param {Array} list devices list
      * @example client.dashboard.devicesStatus([{ uuid: "sdk-win-7744606f9f7b42d5b99d11e80f70886c", appid: "win_earnapp.com" }]);
      * @returns {Promise<Object>}
      */
     devicesStatus(list) {
-        return this.#request("POST", "device_statuses", { data: { list: list } });
+        return this.#request("POST", "device_statuses", {
+            data: { list: list },
+        });
     }
 
     /**
@@ -331,6 +357,46 @@ class Dashboard {
      */
     brightvpnReferrals() {
         return this.#request("GET", "referees_bvpn");
+    }
+
+    /**
+     * Get speedtests.
+     * @example client.dashboard.speedtest();
+     * @returns {Promise<Object>}
+     */
+    speedtests() {
+        return this.#request("GET", "speedtest");
+    }
+
+    /**
+     * Delete your account.
+     * CANNOT BE UNDONE
+     * @param {string} reason deletion reason
+     * @example client.dashboard.deleteAccount("some reason here");
+     * @returns {Promise<Object>}
+     */
+    deleteAccount(reason) {
+        return this.#request("DELETE", "user", {
+            data: { reason: reason },
+        });
+    }
+
+    /**
+     * Disable your account.
+     * @example client.dashboard.disableAccount();
+     * @returns {Promise<Object>}
+     */
+    disableAccount() {
+        return this.#request("PUT", "user/disable");
+    }
+
+    /**
+     * Restore your account.
+     * @example client.dashboard.restoreAccount();
+     * @returns {Promise<Object>}
+     */
+    restoreAccount() {
+        return this.#request("PUT", "restore_user");
     }
 }
 

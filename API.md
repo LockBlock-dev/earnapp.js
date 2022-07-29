@@ -68,7 +68,7 @@ Use client.linkDevice to link it to your account.
 | uuid | <code>string</code> | device uuid |
 | version | <code>string</code> | app version |
 | arch | <code>string</code> | device arch: arm, arm64, x64, android |
-| appid | <code>string</code> | app id: node_earnapp.com, win_earnapp.com,	com.eapp, mac_earnapp.com |
+| appid | <code>string</code> | app id: node_earnapp.com, win_earnapp.com,	com.eapp, mac_com.earnapp |
 
 **Example**  
 ```js
@@ -108,7 +108,8 @@ client.deviceStats("sdk-node-6fd29568de6f481887ccf0ddea29dcca", "1.293.301", "x6
 * [Dashboard](#Dashboard)
     * [new Dashboard()](#new_Dashboard_new)
     * [.API_URL](#Dashboard+API_URL) : <code>string</code>
-    * [.login(authCookies)](#Dashboard+login) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [.login(authCookies)](#Dashboard+login) ⇒ <code>Object</code>
+    * [.getCSRF(authCookies)](#Dashboard+getCSRF) ⇒ <code>Promise.&lt;Object&gt;</code>
     * [.downloads()](#Dashboard+downloads) ⇒ <code>Promise.&lt;Object&gt;</code>
     * [.paymentMethods()](#Dashboard+paymentMethods) ⇒ <code>Promise.&lt;Object&gt;</code>
     * [.userData()](#Dashboard+userData) ⇒ <code>Promise.&lt;Object&gt;</code>
@@ -132,6 +133,10 @@ client.deviceStats("sdk-node-6fd29568de6f481887ccf0ddea29dcca", "1.293.301", "x6
     * [.usage(step)](#Dashboard+usage) ⇒ <code>Promise.&lt;Object&gt;</code>
     * [.devicesStatus(list)](#Dashboard+devicesStatus) ⇒ <code>Promise.&lt;Object&gt;</code>
     * [.brightvpnReferrals()](#Dashboard+brightvpnReferrals) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [.speedtests()](#Dashboard+speedtests) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [.deleteAccount(reason)](#Dashboard+deleteAccount) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [.disableAccount()](#Dashboard+disableAccount) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [.restoreAccount()](#Dashboard+restoreAccount) ⇒ <code>Promise.&lt;Object&gt;</code>
 
 <a name="new_Dashboard_new"></a>
 
@@ -150,8 +155,8 @@ The base API URL
 **Kind**: instance property of [<code>Dashboard</code>](#Dashboard)  
 <a name="Dashboard+login"></a>
 
-### dashboard.login(authCookies) ⇒ <code>Promise.&lt;Object&gt;</code>
-Log into EarnApp.
+### dashboard.login(authCookies) ⇒ <code>Object</code>
+Log into the dashboard.
 
 **Kind**: instance method of [<code>Dashboard</code>](#Dashboard)  
 
@@ -165,6 +170,23 @@ Log into EarnApp.
 **Example**  
 ```js
 client.dashboard.login({ authMethod: "google", oauthRefreshToken: "1%2F%2F0dx...mfz75", xsrfToken: "uE9Tm4sXtk4wHEz4tZFJyANB" });
+```
+<a name="Dashboard+getCSRF"></a>
+
+### dashboard.getCSRF(authCookies) ⇒ <code>Promise.&lt;Object&gt;</code>
+Get the CSRF token from the dashboard. Automatically sets the CSRF token for future requests.
+
+**Kind**: instance method of [<code>Dashboard</code>](#Dashboard)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| authCookies | <code>Object</code> |  |
+| authCookies.authMethod | <code>string</code> | authentication method |
+| authCookies.oauthRefreshToken | <code>string</code> | OAuth refresh token |
+
+**Example**  
+```js
+client.dashboard.getCSRF({ authMethod: "google", oauthRefreshToken: "1%2F%2F0dx...mfz75" });
 ```
 <a name="Dashboard+downloads"></a>
 
@@ -441,7 +463,7 @@ Get user devices status.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| list | <code>string</code> | devices list |
+| list | <code>Array</code> | devices list |
 
 **Example**  
 ```js
@@ -456,6 +478,52 @@ Get user BrightVPN referrals.
 **Example**  
 ```js
 client.dashboard.brightvpnReferrals();
+```
+<a name="Dashboard+speedtests"></a>
+
+### dashboard.speedtests() ⇒ <code>Promise.&lt;Object&gt;</code>
+Get speedtests.
+
+**Kind**: instance method of [<code>Dashboard</code>](#Dashboard)  
+**Example**  
+```js
+client.dashboard.speedtest();
+```
+<a name="Dashboard+deleteAccount"></a>
+
+### dashboard.deleteAccount(reason) ⇒ <code>Promise.&lt;Object&gt;</code>
+Delete your account.
+CANNOT BE UNDONE
+
+**Kind**: instance method of [<code>Dashboard</code>](#Dashboard)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| reason | <code>string</code> | deletion reason |
+
+**Example**  
+```js
+client.dashboard.deleteAccount("some reason here");
+```
+<a name="Dashboard+disableAccount"></a>
+
+### dashboard.disableAccount() ⇒ <code>Promise.&lt;Object&gt;</code>
+Disable your account.
+
+**Kind**: instance method of [<code>Dashboard</code>](#Dashboard)  
+**Example**  
+```js
+client.dashboard.disableAccount();
+```
+<a name="Dashboard+restoreAccount"></a>
+
+### dashboard.restoreAccount() ⇒ <code>Promise.&lt;Object&gt;</code>
+Restore your account.
+
+**Kind**: instance method of [<code>Dashboard</code>](#Dashboard)  
+**Example**  
+```js
+client.dashboard.restoreAccount();
 ```
 <a name="FatalError"></a>
 
@@ -592,7 +660,8 @@ error type
 * [PiggyBox](#PiggyBox)
     * [new PiggyBox()](#new_PiggyBox_new)
     * [.API_URL](#PiggyBox+API_URL) : <code>string</code>
-    * [.login(authCookies)](#PiggyBox+login) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [.login(authCookies)](#PiggyBox+login) ⇒ <code>Object</code>
+    * [.getCSRF(authCookies)](#PiggyBox+getCSRF) ⇒ <code>Promise.&lt;Object&gt;</code>
     * [.downloads()](#PiggyBox+downloads) ⇒ <code>Promise.&lt;Object&gt;</code>
     * [.paymentMethods()](#PiggyBox+paymentMethods) ⇒ <code>Promise.&lt;Object&gt;</code>
     * [.userData()](#PiggyBox+userData) ⇒ <code>Promise.&lt;Object&gt;</code>
@@ -633,8 +702,8 @@ The base API URL
 **Kind**: instance property of [<code>PiggyBox</code>](#PiggyBox)  
 <a name="PiggyBox+login"></a>
 
-### piggyBox.login(authCookies) ⇒ <code>Promise.&lt;Object&gt;</code>
-Log into EarnApp.
+### piggyBox.login(authCookies) ⇒ <code>Object</code>
+Log into the dashboard.
 
 **Kind**: instance method of [<code>PiggyBox</code>](#PiggyBox)  
 
@@ -648,6 +717,23 @@ Log into EarnApp.
 **Example**  
 ```js
 client.dashboard.login({ authMethod: "google", oauthRefreshToken: "1%2F%2F0dx...mfz75", xsrfToken: "uE9Tm4sXtk4wHEz4tZFJyANB" });
+```
+<a name="PiggyBox+getCSRF"></a>
+
+### piggyBox.getCSRF(authCookies) ⇒ <code>Promise.&lt;Object&gt;</code>
+Get the CSRF token from the dashboard. Automatically sets the CSRF token for future requests.
+
+**Kind**: instance method of [<code>PiggyBox</code>](#PiggyBox)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| authCookies | <code>Object</code> |  |
+| authCookies.authMethod | <code>string</code> | authentication method |
+| authCookies.oauthRefreshToken | <code>string</code> | OAuth refresh token |
+
+**Example**  
+```js
+client.dashboard.getCSRF({ authMethod: "google", oauthRefreshToken: "1%2F%2F0dx...mfz75" });
 ```
 <a name="PiggyBox+downloads"></a>
 
@@ -913,7 +999,7 @@ Get user devices status.
 
 **Example**  
 ```js
-client.dashboard.devicesStatus([{ uuid: "sdk-win-7744606f9f7b42d5b99d11e80f70886c", appid: "win_earnapp.com" }]);
+client.dashboard.devicesStatus([{ uuid: "sdk-node-7744606f9f7b42d5b99d11e80f70886c", appid: "node_thepiggybox.net" }]);
 ```
 <a name="PiggyBox+brightvpnReferrals"></a>
 
