@@ -7,17 +7,18 @@ This document is all the knowledge i got on EarnApp or other related BrightData 
 Link: [Dashboard](https://earnapp.com/dashboard/)  
 Devices:
 
-| platform | appid                                                | arch    | uuid                      |
-| -------- | ---------------------------------------------------- | ------- | ------------------------- |
-| Windows  | <code>win_earnapp.com</code>                         | x64     | <code>sdk-win-</code>     |
-| Linux    | <code>node_earnapp.com</code>                        | x64     | <code>sdk-node-</code>    |
-| Linux    | <code>node_earnapp.com</code>                        | arm     | <code>sdk-node-</code>    |
-| Linux    | <code>node_earnapp.com</code>                        | arm64   | <code>sdk-node-</code>    |
-| Mac      | <code>mac_com.earnapp</code>                         | x64     | <code>sdk-mac-</code>     |
-| Mac      | <code>mac_com.earnapp</code>                         | arm64   | <code>sdk-mac-</code>     |
-| Android  | <code>com.eapp</code>                                | android | <code>sdk-android-</code> |
-| iOS      | <code>com.eapp</code> / <code>ios_com.earnapp</code> | ios     | <code>sdk-ios-</code>     |
-| Roku TV  | <code>roku_earnapp.com</code>                        | roku    | <code>sdk-roku-</code>    |
+| platform           | appid                                                | arch    | uuid                      |
+| ------------------ | ---------------------------------------------------- | ------- | ------------------------- |
+| Windows            | <code>win_earnapp.com</code>                         | x64     | <code>sdk-win-</code>     |
+| Linux              | <code>node_earnapp.com</code>                        | x64     | <code>sdk-node-</code>    |
+| Linux              | <code>node_earnapp.com</code>                        | arm     | <code>sdk-node-</code>    |
+| Linux              | <code>node_earnapp.com</code>                        | arm64   | <code>sdk-node-</code>    |
+| Mac                | <code>mac_com.earnapp</code>                         | x64     | <code>sdk-mac-</code>     |
+| Mac                | <code>mac_com.earnapp</code>                         | arm64   | <code>sdk-mac-</code>     |
+| Android            | <code>com.eapp</code>                                | android | <code>sdk-android-</code> |
+| iOS (old)          | <code>com.eapp</code> / <code>ios_com.earnapp</code> | ios     | <code>sdk-ios-</code>     |
+| iOS (BrightReward) | <code>ios_com.brd.earnapp</code>                     | ios     | <code>sdk-ios-</code>     |
+| Roku TV            | <code>roku_earnapp.com</code>                        | roku    | <code>sdk-roku-</code>    |
 
 -   ## Piggybox
 

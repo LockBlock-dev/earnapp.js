@@ -85,8 +85,8 @@ class Client {
      * Use client.linkDevice to link it to your account.
      * @param {string} uuid device uuid
      * @param {string} version app version
-     * @param {string} arch device arch: arm, arm64, x64, android
-     * @param {string} appid app id: node_earnapp.com, win_earnapp.com,	com.eapp, mac_com.earnapp
+     * @param {string} arch device arch
+     * @param {string} appid app id
      * @example client.registerDevice("sdk-win-7744606f9f7b42d5b99d11e80f70886c", "1.295.874", "x64", "win_earnapp.com");
      * @example client.registerDevice("sdk-node-6fd29568de6f481887ccf0ddea29dcca", "1.293.301", "x64", "node_earnapp.com");
      * @returns {Promise<Object>}
@@ -106,8 +106,8 @@ class Client {
      * Get a device stats on EarnApp database.
      * @param {string} uuid device uuid
      * @param {string} version app version
-     * @param {string} arch device arch: arm, arm64, x64, android
-     * @param {string} appid app id: node_earnapp.com, win_earnapp.com,	com.eapp, mac_com.earnapp
+     * @param {string} arch device arch
+     * @param {string} appid app id
      * @example client.deviceStats("sdk-win-7744606f9f7b42d5b99d11e80f70886c", "1.295.874", "x64", "win_earnapp.com");
      * @example client.deviceStats("sdk-node-6fd29568de6f481887ccf0ddea29dcca", "1.293.301", "x64", "node_earnapp.com");
      * @returns {Promise<Object>}

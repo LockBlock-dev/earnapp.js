@@ -327,7 +327,7 @@ class PiggyBox {
     /**
      * Get user devices status.
      * @param {string} list devices list
-     * @example client.dashboard.devicesStatus([{ uuid: "sdk-node-7744606f9f7b42d5b99d11e80f70886c", appid: "node_thepiggybox.net" }]);
+     * @example client.dashboard.devicesStatus([ "sdk-node-7744606f9f7b42d5b99d11e80f70886c" ]);
      * @returns {Promise<Object>}
      */
     devicesStatus(list) {

@@ -467,7 +467,7 @@ Get user devices status.
 
 **Example**  
 ```js
-client.dashboard.devicesStatus([{ uuid: "sdk-win-7744606f9f7b42d5b99d11e80f70886c", appid: "win_earnapp.com" }]);
+client.dashboard.devicesStatus([ "sdk-win-7744606f9f7b42d5b99d11e80f70886c" ]);
 ```
 <a name="Dashboard+brightvpnReferrals"></a>
 
@@ -999,7 +999,7 @@ Get user devices status.
 
 **Example**  
 ```js
-client.dashboard.devicesStatus([{ uuid: "sdk-node-7744606f9f7b42d5b99d11e80f70886c", appid: "node_thepiggybox.net" }]);
+client.dashboard.devicesStatus([ "sdk-node-7744606f9f7b42d5b99d11e80f70886c" ]);
 ```
 <a name="PiggyBox+brightvpnReferrals"></a>
 

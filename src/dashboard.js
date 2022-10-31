@@ -341,7 +341,7 @@ class Dashboard {
     /**
      * Get user devices status.
      * @param {Array} list devices list
-     * @example client.dashboard.devicesStatus([{ uuid: "sdk-win-7744606f9f7b42d5b99d11e80f70886c", appid: "win_earnapp.com" }]);
+     * @example client.dashboard.devicesStatus([ "sdk-win-7744606f9f7b42d5b99d11e80f70886c" ]);
      * @returns {Promise<Object>}
      */
     devicesStatus(list) {
