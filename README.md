@@ -39,6 +39,7 @@ earnapp.js is a Node.js module that allows you to easily interact with the EarnA
 
 ## Documentation
 
+-   [Knowledge base](/KnowledgeBase.md)
 -   [API documentation](/API.md)
 -   [Changelog](/CHANGELOG.md)
 -   [How to login with cookies](/Cookies.md)
