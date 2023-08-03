@@ -45,7 +45,6 @@ class Client {
             headers: {
                 "User-Agent": `earnapp.js ${pkg.version} (https://github.com/LockBlock-dev/earnapp.js)`,
                 "Content-Type": "application/json",
-                "Accept-Encoding": "UTF8",
             },
             ...reqOptions,
         };
